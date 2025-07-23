@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正在跳转...</title>
+    <script>
+        // 目标跳转网址（请替换为你需要的URL）
+        const targetUrl = "https://www.baidu.com";
+        
+        // 检测是否为移动设备
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+        
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 如果是移动设备，则显示提示不跳转
+            if (isMobileDevice()) {
+                document.getElementById('mobile-notice').style.display = 'block';
+                document.getElementById('redirect-container').style.display = 'none';
+                return;
+            }
+            
+            // 开始倒计时跳转
+            let countdown = 3; // 倒计时秒数
+            const countdownElement = document.getElementById('countdown');
+            
+            // 更新倒计时显示
+            function updateCountdown() {
+                countdownElement.textContent = countdown;
+                if (countdown <= 0) {
+                    window.location.href = targetUrl;
+                } else {
+                    countdown--;
+                    setTimeout(updateCountdown, 1000);
+                }
+            }
+            
+            // 启动倒计时
+            updateCountdown();
+            
+            // 5秒后强制跳转（防止JavaScript阻塞）
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 5000);
+        });
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        
+        .redirect-container {
+            text-align: center;
+            max-width: 500px;
+            padding: 40px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background-color: #3b82f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        
+        p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .countdown-box {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3b82f6;
+            color: white;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        #mobile-notice {
+            display: none;
+            text-align: center;
+            max-width: 500px;
+            padding: 40px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        #mobile-notice h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        #mobile-notice p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .btn-back {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3b82f6;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-back:hover {
+            background-color: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <!-- 跳转提示容器 -->
+    <div id="redirect-container" class="redirect-container">
+        <div class="logo">
+            <i class="fa fa-exchange"></i>
+        </div>
+        <h1>正在为您跳转</h1>
+        <p>您将在 <span id="countdown" class="text-primary font-bold">3</span> 秒后自动跳转到目标网站</p>
+        <div class="countdown-box">
+            <i class="fa fa-spinner fa-spin mr-2"></i>
+            <span id="countdown-display">3</span>
+        </div>
+    </div>
+    
+    <!-- 移动设备提示 -->
+    <div id="mobile-notice">
+        <h2>移动端访问</h2>
+        <p>此页面仅支持PC端自动跳转。若需访问，请在电脑上打开此链接。</p>
+        <a href="#" class="btn-back">返回上一页</a>
+    </div>
+</body>
+</html>
